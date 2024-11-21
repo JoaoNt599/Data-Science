@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Análise de Sentimento dos comentários no Reddit sobre Covid-19{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div style="width:700px;height: 500px;margin-top: 30px;">
+    <canvas id="chart"></canvas>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const chart = document.getElementById("chart");
+    const sentimentChart = new Chart(chart, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [
+                {
+                    label: 'Postivos',
+                    data: [],
+                    borderColor: "rgb(54, 162, 235)",
+                    backgroundColor: "rgb(54, 162, 235)"
+                },
+                {
+                    label: 'Negativos',
+                    data: [],
+                    borderColor: "rgb(255, 99, 132)",
+                    backgroundColor: "rgb(255, 99, 132)"
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    max: 30,
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    var labels = []
+    var totalPositive = [];
+    var totalNegative = []
+
+    setInterval(function() {
+        $.getJSON('/comments/chart-data', function(data) {
+            if (data) {
+                labels = []
+                totalPositive = []
+                totalNegative = []
+                data.forEach(function(element) {
+                     labels.push(element.hour);
+                     totalPositive.push(element.totalPositive);
+                     totalNegative.push(element.totalNegative);
+                });
+            }
+        });
+        sentimentChart.data.labels = labels;
+        sentimentChart.data.datasets[0].data = totalPositive;
+        sentimentChart.data.datasets[1].data = totalNegative;
+        sentimentChart.update();
+    }, 5000);
+</script>
+{% endblock %}
