@@ -1,4 +1,7 @@
-### Requisitos
+# Setiment Analysis
+
+
+## Requisitos
 
 - Apache Spark 3.2.0 with Hadoop 3.2
 - Python 3.8.10
@@ -6,24 +9,26 @@
 - Flask
 - Docker e Docker Compose
 
-### Criar cluster o spark e subir aplicação web
 
-```shell
-$ ./build-images.sh
-$ docker-compose up -d
-```
+## Criar cluster o spark e subir aplicação web
 
-### Gerar secret
+    ./build-images.sh
+    docker-compose up -d
 
-```shell
-$ python -c 'import secrets; print(secrets.token_hex())'
-```
+
+## Gerar secret
+
+    python -c 'import secrets; print(secrets.token_hex())'
+
 
 ### Spark Web
-> http://localhost:8080
+
+    http://localhost:8080
 
 ### Aplicação Web
-> http://localhost:3000
+
+    http://localhost:3000
 
 ### Jupyter Notebook
-> http://localhost:8888
+
+    http://localhost:8888
