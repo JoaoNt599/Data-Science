@@ -1,0 +1,7 @@
+"country" "gold" "silver" "bronze"
+"1" "USA" 39 41 33
+"2" "China" 38 32 18
+"3" "Japan" 27 14 17
+"4" "UK" 22 21 22
+"5" "Russia" 20 28 23
+"6" "Australia" 17 7 22
