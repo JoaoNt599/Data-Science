@@ -32,8 +32,9 @@ mean(df$X_COORD_CD)
 
 # e - Qual o intervalo temporal dos dados ? 
 
+min(df$OCCUR_DATE)
+max(df$OCCUR_DATE)
 
-
-
+class(df$OCCUR_DATE)
 
 
