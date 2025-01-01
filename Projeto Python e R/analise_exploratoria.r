@@ -147,6 +147,31 @@ ggplot(frequencias, aes(x = 2, y = Frequencia, fill = as.factor(Valor))) +
   geom_text(aes(label = paste0(Porcentagem, "%")), position = position_stack(vjust = 0.5))
 
 
+# Filtra os resultados para críticos e falhas críticas
+criticos <- sum(dados$Resultado == 20)
+falhas <- sum(dados$Resultado == 1)
+
+# Dataframe com as frquências 
+frequencias <- data.frame(
+  Tipo = c("Crítico (20)", "Falha Crítica (1)"),
+  Quantidade = c(criticos, falhas)
+)
+
+# Calcular as porcentagens
+frequencias$Porcentagem <- round((frequencias$Quantidade / sum(frequencias$Quantidade)) * 100, 1)
+
+# Gerando gráfico de pizza
+ggplot(frequencias, aes(x = "", y = Quantidade, fill = Tipo)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  labs(
+    title = "Comparação de Rolagens: Crítico vs Falha Crítica",
+    fill = "Tipo"
+  ) +
+  theme_void() + # remove os eixos
+  geom_text(aes(label = paste0(Porcentagem, "%")), position = position_stack(vjust = 0.5)) +
+  scale_fill_manual(values = c("Crítico (20)" = "green", "Falha Crítica (1)" = "red"))
+
 
 # 4. Predição das próximas 10 rolagens
 modelo <- auto.arima(dados$Resultado)

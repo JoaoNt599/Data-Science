@@ -2,7 +2,6 @@ import csv
 import random
 import os
 
-
 # Caminho para o diretório onde o script está localizado
 caminho_do_script = os.path.dirname(os.path.abspath(__file__))
 
@@ -13,7 +12,6 @@ arquivo_csv = os.path.join(diretorio_data, "resultados_d20.csv")
 # Garante que o diretório "data" exista
 if not os.path.exists(diretorio_data):
     os.makedirs(diretorio_data)
-
 
 def rolar_d20():
     return random.randint(1, 20)

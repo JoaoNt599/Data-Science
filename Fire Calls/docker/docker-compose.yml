@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  fire-calls-analysis:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../data:/app/data        # Monta a pasta de dados no contêiner
+      - ../scripts:/app/scripts  # Monta os scripts no contêiner
+      - ../notebooks:/app/notebooks  # Monta os notebooks no contêiner
+    environment:
+      - PYSPARK_PYTHON=python3
+      - PYSPARK_DRIVER_PYTHON=python3
+    ports:
+      - "8888:8888"  # Porta para o Jupyter Notebook
+    command: >
+      bash -c "jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root"
