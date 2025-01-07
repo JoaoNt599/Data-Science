@@ -174,6 +174,24 @@ ggplot(frequencias, aes(x = "", y = Quantidade, fill = Tipo)) +
 
 
 # 4. Predição das próximas 10 rolagens
+library(dplyr)
+
+# Frequência dos resultados
+frequencia <- dados %>%
+  group_by(Resultado) %>%
+  summarise(Frequencia = n()) %>%
+  mutate(Probabilidade = Frequencia / sum(Frequencia))
+
+# Próximas 10 previsões baseadas na distribuição observada
+set.seed(123) # Reprodutibilidade
+previsoes <- sample(frequencia$Resultado, size = 10, replace = TRUE, prob = frequencia$Probabilidade)
+
+# Exibir previsões
+print("Previsões das próximas 10 rolagens:")
+print(previsoes)
+
+# ============================================================================================
+
 modelo <- auto.arima(dados$Resultado)
 
 # Prevendo as proximas 10 rolagens
@@ -183,3 +201,7 @@ print(paste("Previsões:", previsoes))
 # Plotando as previsões
 autoplot(previsoes) +
   labs(title = "Predição das Próximas 10 Rolagens", x = "Rolagens Futuras", y = "Resultado")
+
+
+
+
