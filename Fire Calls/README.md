@@ -1,8 +1,3 @@
+## Projeto atual:
 
-
-
-### Para rodar o prjeto:
-
-    docker-compose build
-
-    docker-compose up
+https://github.com/JoaoNt599/Fire-Calls-Analysis
