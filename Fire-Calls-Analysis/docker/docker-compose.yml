@@ -6,13 +6,13 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     volumes:
-      - ../data:/app/data        # Monta a pasta de dados no contêiner
-      - ../scripts:/app/scripts  # Monta os scripts no contêiner
-      - ../notebooks:/app/notebooks  # Monta os notebooks no contêiner
+      - ../data:/app/data       
+      - ../scripts:/app/scripts 
+      - ../notebooks:/app/notebooks  
     environment:
       - PYSPARK_PYTHON=python3
       - PYSPARK_DRIVER_PYTHON=python3
     ports:
-      - "8888:8888"  # Porta para o Jupyter Notebook
+      - "8888:8888"  # upyter Notebook port
     command: >
       bash -c "jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root"
