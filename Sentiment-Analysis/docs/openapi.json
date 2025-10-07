@@ -1,0 +1,265 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "FastAPI",
+      "description": "API para envio e análise de feedbacks.",
+      "version": "0.1.0"
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "Root",
+          "operationId": "root__get",
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "summary": "Login",
+          "operationId": "login_login_post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSchema"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/protegida/": {
+        "get": {
+          "summary": "Rota Protegida",
+          "operationId": "rota_protegida_protegida__get",
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            }
+          },
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ]
+        }
+      },
+      "/feedback/": {
+        "post": {
+          "summary": "Feedback",
+          "operationId": "feedback_feedback__post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Evaluation"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {}
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/feedbacks/": {
+        "get": {
+          "summary": "Get Feedback",
+          "operationId": "get_feedback_feedbacks__get",
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "items": {
+                      "$ref": "#/components/schemas/Feedback"
+                    },
+                    "type": "array",
+                    "title": "Response Get Feedback Feedbacks  Get"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Evaluation": {
+          "properties": {
+            "comment": {
+              "type": "string",
+              "title": "Comment"
+            },
+            "rating": {
+              "type": "integer",
+              "title": "Rating"
+            }
+          },
+          "type": "object",
+          "required": ["comment", "rating"],
+          "title": "Evaluation"
+        },
+        "Feedback": {
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "Id"
+            },
+            "comment": {
+              "type": "string",
+              "title": "Comment"
+            },
+            "rating": {
+              "type": "integer",
+              "title": "Rating"
+            },
+            "descricao": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Descricao"
+            },
+            "status": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          "type": "object",
+          "required": ["id", "comment", "rating"],
+          "title": "Feedback"
+        },
+        "HTTPValidationError": {
+          "properties": {
+            "detail": {
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "type": "array",
+              "title": "Detail"
+            }
+          },
+          "type": "object",
+          "title": "HTTPValidationError"
+        },
+        "LoginSchema": {
+          "properties": {
+            "username": {
+              "type": "string",
+              "title": "Username"
+            },
+            "password": {
+              "type": "string",
+              "title": "Password"
+            }
+          },
+          "type": "object",
+          "required": ["username", "password"],
+          "title": "LoginSchema"
+        },
+        "ValidationError": {
+          "properties": {
+            "loc": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "type": "array",
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          },
+          "type": "object",
+          "required": ["loc", "msg", "type"],
+          "title": "ValidationError"
+        }
+      },
+      "securitySchemes": {
+        "HTTPBearer": {
+          "type": "http",
+          "scheme": "bearer"
+        }
+      }
+    }
+  }
+  

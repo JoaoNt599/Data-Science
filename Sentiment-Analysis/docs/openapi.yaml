@@ -1,0 +1,175 @@
+openapi: 3.1.0
+info:
+  title: FastAPI
+  description: API para envio e análise de feedbacks.
+  version: 0.1.0
+paths:
+  /:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /login:
+    post:
+      summary: Login
+      operationId: login_login_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginSchema'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /protegida/:
+    get:
+      summary: Rota Protegida
+      operationId: rota_protegida_protegida__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+      security:
+        - HTTPBearer: []
+  /feedback/:
+    post:
+      summary: Feedback
+      operationId: feedback_feedback__post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Evaluation'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /feedbacks/:
+    get:
+      summary: Get Feedback
+      operationId: get_feedback_feedbacks__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Get Feedback Feedbacks  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/Feedback'
+components:
+  schemas:
+    Evaluation:
+      title: Evaluation
+      type: object
+      required:
+        - comment
+        - rating
+      properties:
+        comment:
+          type: string
+          title: Comment
+        rating:
+          type: integer
+          title: Rating
+    Feedback:
+      title: Feedback
+      type: object
+      required:
+        - id
+        - comment
+        - rating
+      properties:
+        id:
+          type: string
+          title: Id
+        comment:
+          type: string
+          title: Comment
+        rating:
+          type: integer
+          title: Rating
+        descricao:
+          title: Descricao
+          anyOf:
+            - type: string
+            - type: null
+        status:
+          title: Status
+          anyOf:
+            - type: string
+            - type: null
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    LoginSchema:
+      title: LoginSchema
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          title: Username
+        password:
+          type: string
+          title: Password
+    ValidationError:
+      title: ValidationError
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+        - name: kafka-consumer
+          image: projetokafka-kafka_consumer:latest  # minikube para uso local
+          env:
+            - name: MONGO_URI
+              value: "mongodb://mongodb:27017"
+            - name: KAFKA_BROKER
+              value: "kafka:29092"

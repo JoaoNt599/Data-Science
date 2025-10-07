@@ -1,0 +1,9 @@
+Login:      http://localhost:8502/
+
+Streamlit:  http://localhost:8501/
+
+FastAPI:    http://localhost:8000/
+
+Swagger:    http://localhost:8000/docs
+
+Kowl:       http://localhost:8080/topics

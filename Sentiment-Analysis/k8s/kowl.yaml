@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kowl
+spec:
+  ports:
+    - port: 8080
+  selector:
+    app: kowl
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kowl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kowl
+  template:
+    metadata:
+      labels:
+        app: kowl
+    spec:
+      containers:
+        - name: kowl
+          image: quay.io/cloudhut/kowl:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KAFKA_BROKERS
+              value: "kafka:29092"
